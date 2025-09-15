@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Buttercup</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to top, #a2d9ff, #ffffff);
+      font-family: Arial, sans-serif;
+    }
+
+    .scene {
+      position: relative;
+      width: 700px;
+      height: 500px;
+      background: #e6f7ff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+      background: #6b94d2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .man, .woman {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .man {
+      left: 160px;
+      bottom: 120px;
+      animation: body-lower 4s forwards;
+      transform-origin: bottom center;
+    }
+
+    .woman {
+      right: 160px;
+      bottom: 120px;
+    }
+
+    /* Head */
+    .head {
+      width: 70px;
+      height: 70px;
+      background: #ffd9b3;
+      border-radius: 50%;
+      border: 2px solid #333;
+      position: relative;
+    }
+
+    /* Simple face */
+    .eye {
+      position: absolute;
+      top: 25px;
+      width: 10px;
+      height: 10px;
+      background: #000;
+      border-radius: 50%;
+    }
+    .eye.left { left: 18px; }
+    .eye.right { right: 18px; }
+
+    .smile {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      width: 30px;
+      height: 15px;
+      border-bottom: 3px solid #000;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Body */
+    .body {
+      width: 50px;
+      height: 120px;
+      background: currentColor;
+      border-radius: 20px;
+      border: 2px solid #333;
+    }
+
+    .man .body { color: #2e5bff; }
+    .woman .body { color: #ff4d88; }
+
+    /* Arms */
+    .arm {
+      width: 16px;
+      height: 80px;
+      background: currentColor;
+      border: 2px solid #333;
+      position: absolute;
+      top: 90px;
+      border-radius: 10px;
+    }
+
+    .man .arm.right {
+      right: -25px;
+      transform-origin: top left;
+      animation: offer-ring 4s forwards;
+    }
+    .man .arm.left { left: -25px; }
+    .woman .arm.left { left: -25px; }
+    .woman .arm.right { right: -25px; }
+
+    /* Legs container */
+    .legs {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    /* Each leg */
+    .leg {
+      width: 18px;
+      height: 90px;
+      background: currentColor;
+      border: 2px solid #333;
+      border-radius: 8px;
+      transform-origin: top center;
+    }
+
+    /* Man's left leg kneels */
+    .man .leg.left {
+      animation: kneel-leg 4s forwards;
+    }
+
+    /* Woman's legs (static, pink dress color) */
+    .woman .leg {
+      background: #ff4d88;
+    }
+
+    /* Ring */
+    .ring {
+      position: absolute;
+      bottom: 260px;
+      left: 320px;
+      width: 24px;
+      height: 24px;
+      border: 3px solid gold;
+      border-radius: 50%;
+      opacity: 0;
+      animation: show-ring 4s forwards;
+      animation-delay: 2s;
+    }
+
+    @keyframes body-lower {
+      0%,40% { transform: translateY(0); }
+      100% { transform: translateY(40px); }
+    }
+
+    @keyframes kneel-leg {
+      0%,40% { transform: rotate(0) translateX(0); }
+      100% { transform: rotate(70deg) translateX(15px); }
+    }
+
+    @keyframes offer-ring {
+      0%,50% { transform: rotate(0); }
+      70% { transform: rotate(-60deg); }
+      100% { transform: rotate(-30deg); }
+    }
+
+    @keyframes show-ring {
+      0% { opacity: 0; transform: scale(0.3); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Heart */
+    .heart {
+      position: absolute;
+      bottom: 320px;
+      left: 360px;
+      width: 40px;
+      height: 40px;
+      background: red;
+      transform: rotate(-45deg);
+      opacity: 0;
+      animation: float-heart 2s forwards;
+      animation-delay: 3s;
+    }
+
+    .heart:before, .heart:after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before { top: -20px; left: 0; }
+    .heart:after { left: 20px; top: 0; }
+
+    @keyframes float-heart {
+      0% { opacity: 0; transform: translateY(0) scale(0.6) rotate(-45deg); }
+      50% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-100px) scale(1.2) rotate(-45deg); }
+    }
+
+    /* Proposal container inside green ground */
+    .proposal-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: show-text 2s forwards;
+      animation-delay: 3.5s;
+    }
+
+    .proposal-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff; /* white for contrast on green */
+    }
+
+    .reply-btn {
+      padding: 8px 16px;
+      background: #25D366;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      animation: bounce 1s infinite;
+      animation-delay: 5.2s; /* starts bouncing after it shows */
+    }
+
+    @keyframes show-text {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Replay button */
+    .replay-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #2e5bff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <button class="replay-btn" onclick="replay()">Replay</button>
+
+    <!-- Ground area now holds the proposal text -->
+    <div class="ground">
+      <div class="proposal-container">
+        <div class="proposal-text">Will you be my girlfriend?</div>
+        <a href="https://wa.me/2349015151842?text=Yes%2C+I+say+YES!" target="_blank" class="reply-btn">Reply</a>
+      </div>
+    </div>
+
+    <!-- Man -->
+    <div class="man">
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="smile"></div>
+      </div>
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+      <div class="legs">
+        <div class="leg left"></div>
+        <div class="leg right"></div>
+      </div>
+    </div>
+
+    <!-- Woman -->
+    <div class="woman">
+      <div class="head">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="smile"></div>
+      </div>
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+      <div class="legs">
+        <div class="leg"></div>
+        <div class="leg"></div>
+      </div>
+    </div>
+
+    <!-- Extras -->
+    <div class="ring"></div>
+    <div class="heart"></div>
+  </div>
+
+  <script>
+    function replay() {
+      const scene = document.getElementById('scene');
+      scene.innerHTML = scene.innerHTML; // reload content to replay animation
+    }
+  </script>
+</body>
+</html>
