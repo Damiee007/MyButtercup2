@@ -45,7 +45,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transform: scale(0.8); /* unified scale for both */
     }
 
     .man {
@@ -62,8 +61,8 @@
 
     /* Head */
     .head {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       background: #ffd9b3;
       border-radius: 50%;
       border: 2px solid #333;
@@ -72,32 +71,32 @@
 
     .eye {
       position: absolute;
-      top: 25px;
-      width: 10px;
-      height: 10px;
+      top: 18px;
+      width: 8px;
+      height: 8px;
       background: #000;
       border-radius: 50%;
     }
-    .eye.left { left: 18px; }
-    .eye.right { right: 18px; }
+    .eye.left { left: 12px; }
+    .eye.right { right: 12px; }
 
     .smile {
       position: absolute;
-      bottom: 15px;
+      bottom: 10px;
       left: 50%;
-      width: 30px;
-      height: 15px;
-      border-bottom: 3px solid #000;
+      width: 22px;
+      height: 10px;
+      border-bottom: 2px solid #000;
       border-radius: 50%;
       transform: translateX(-50%);
     }
 
     /* Body */
     .body {
-      width: 50px;
-      height: 120px;
+      width: 40px;
+      height: 100px;
       background: currentColor;
-      border-radius: 20px;
+      border-radius: 15px;
       border: 2px solid #333;
     }
 
@@ -106,38 +105,38 @@
 
     /* Arms */
     .arm {
-      width: 16px;
-      height: 80px;
+      width: 14px;
+      height: 70px;
       background: currentColor;
       border: 2px solid #333;
       position: absolute;
-      top: 90px;
-      border-radius: 10px;
+      top: 80px;
+      border-radius: 8px;
     }
 
     .man .arm.right {
-      right: -25px;
+      right: -22px;
       transform-origin: top left;
       animation: offer-ring 4s forwards;
     }
-    .man .arm.left { left: -25px; }
-    .woman .arm.left { left: -25px; }
-    .woman .arm.right { right: -25px; }
+    .man .arm.left { left: -22px; }
+    .woman .arm.left { left: -22px; }
+    .woman .arm.right { right: -22px; }
 
     /* Legs */
     .legs {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin-top: 10px;
       justify-content: center;
     }
 
     .leg {
-      width: 18px;
-      height: 90px;
+      width: 16px;
+      height: 70px;
       background: currentColor;
       border: 2px solid #333;
-      border-radius: 8px;
+      border-radius: 6px;
       transform-origin: top center;
     }
 
@@ -154,8 +153,8 @@
       position: absolute;
       bottom: 55%;
       left: 47%;
-      width: 24px;
-      height: 24px;
+      width: 20px;
+      height: 20px;
       border: 3px solid gold;
       border-radius: 50%;
       opacity: 0;
@@ -165,7 +164,7 @@
 
     @keyframes body-lower {
       0%,40% { transform: translateY(0); }
-      100% { transform: translateY(40px); }
+      100% { transform: translateY(30px); }
     }
 
     @keyframes kneel-leg {
@@ -189,8 +188,8 @@
       position: absolute;
       bottom: 70%;
       left: 50%;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       background: red;
       transform: rotate(-45deg);
       opacity: 0;
@@ -201,19 +200,19 @@
     .heart:before, .heart:after {
       content: '';
       position: absolute;
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       background: red;
       border-radius: 50%;
     }
 
-    .heart:before { top: -20px; left: 0; }
-    .heart:after { left: 20px; top: 0; }
+    .heart:before { top: -17px; left: 0; }
+    .heart:after { left: 17px; top: 0; }
 
     @keyframes float-heart {
       0% { opacity: 0; transform: translateY(0) scale(0.6) rotate(-45deg); }
       50% { opacity: 1; }
-      100% { opacity: 0; transform: translateY(-100px) scale(1.2) rotate(-45deg); }
+      100% { opacity: 0; transform: translateY(-80px) scale(1.2) rotate(-45deg); }
     }
 
     /* Proposal container */
@@ -242,7 +241,7 @@
       text-decoration: none;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      margin-left: 8px; /* spacing from text */
+      margin-left: 8px;
       animation: bounce 1s infinite;
       animation-delay: 5.2s;
     }
@@ -273,16 +272,12 @@
 
     /* Responsive scaling */
     @media (max-width: 768px) {
-      .man, .woman {
-        transform: scale(0.6);
-      }
+      .man, .woman { transform: scale(0.7); }
       .proposal-text { font-size: 18px; }
     }
 
     @media (max-width: 480px) {
-      .man, .woman {
-        transform: scale(0.5);
-      }
+      .man, .woman { transform: scale(0.6); }
       .proposal-text { font-size: 16px; }
       .reply-btn { font-size: 14px; padding: 6px 12px; }
     }
@@ -332,7 +327,6 @@
       </div>
     </div>
 
-    <!-- Extras -->
     <div class="ring"></div>
     <div class="heart"></div>
   </div>
@@ -340,7 +334,7 @@
   <script>
     function replay() {
       const scene = document.getElementById('scene');
-      scene.innerHTML = scene.innerHTML; // reload content to replay animation
+      scene.innerHTML = scene.innerHTML;
     }
   </script>
 </body>
