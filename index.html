@@ -1,13 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Buttercup</title>
   <style>
-    /* Basic reset */
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
       height: 100vh;
@@ -18,56 +15,49 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Responsive scene: width <= 700px or 92vw, keep aspect ratio */
     .scene {
       position: relative;
-      width: min(700px, 92vw);
-      aspect-ratio: 7 / 5; /* keeps 700x500 ratio */
+      width: 100%;
+      max-width: 700px;
+      height: 100%;
+      max-height: 500px;
       background: #e6f7ff;
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
-    /* ground */
     .ground {
       position: absolute;
       bottom: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
+      width: 100%;
+      height: 20%;
       background: #6b94d2;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      z-index: 3;
     }
 
-    /* People container basics */
     .man, .woman {
       position: absolute;
       display: flex;
       flex-direction: column;
       align-items: center;
-      bottom: 120px; /* stands on top of ground */
-      /* we'll center horizontally with left + translateX */
+      transform: scale(0.8); /* default scale for smaller screens */
     }
 
-    /* Use percentages so they stay apart on small screens */
     .man {
-      left: 26%;
-      transform: translateX(-50%) translateY(0); /* keep translateX in place while animating translateY */
-      transform-origin: bottom center;
+      left: 20%;
+      bottom: 20%;
       animation: body-lower 4s forwards;
-      z-index: 4;
+      transform-origin: bottom center;
     }
 
     .woman {
-      left: 74%;
-      transform: translateX(-50%) translateY(0);
-      transform-origin: bottom center;
-      z-index: 4;
+      right: 20%;
+      bottom: 20%;
     }
 
     /* Head */
@@ -80,7 +70,6 @@
       position: relative;
     }
 
-    /* Face */
     .eye {
       position: absolute;
       top: 25px;
@@ -110,8 +99,8 @@
       background: currentColor;
       border-radius: 20px;
       border: 2px solid #333;
-      margin-top: 6px;
     }
+
     .man .body { color: #2e5bff; }
     .woman .body { color: #ff4d88; }
 
@@ -125,22 +114,24 @@
       top: 90px;
       border-radius: 10px;
     }
-    .man .arm.left { left: -25px; }
+
     .man .arm.right {
       right: -25px;
       transform-origin: top left;
       animation: offer-ring 4s forwards;
     }
+    .man .arm.left { left: -25px; }
     .woman .arm.left { left: -25px; }
     .woman .arm.right { right: -25px; }
 
-    /* Legs: side-by-side */
+    /* Legs */
     .legs {
       display: flex;
       gap: 12px;
       margin-top: 10px;
       justify-content: center;
     }
+
     .leg {
       width: 18px;
       height: 90px;
@@ -149,14 +140,20 @@
       border-radius: 8px;
       transform-origin: top center;
     }
-    .man .leg.left { animation: kneel-leg 4s forwards; }
-    .woman .leg { background: #ff4d88; }
 
-    /* ring */
+    .man .leg.left {
+      animation: kneel-leg 4s forwards;
+    }
+
+    .woman .leg {
+      background: #ff4d88;
+    }
+
+    /* Ring */
     .ring {
       position: absolute;
-      bottom: 260px;
-      left: 46%;
+      bottom: 55%;
+      left: 47%;
       width: 24px;
       height: 24px;
       border: 3px solid gold;
@@ -164,84 +161,20 @@
       opacity: 0;
       animation: show-ring 4s forwards;
       animation-delay: 2s;
-      z-index: 5;
     }
 
-    /* heart */
-    .heart {
-      position: absolute;
-      bottom: 320px;
-      left: 52%;
-      width: 40px;
-      height: 40px;
-      background: red;
-      transform: rotate(-45deg);
-      opacity: 0;
-      animation: float-heart 2s forwards;
-      animation-delay: 3s;
-      z-index: 5;
-    }
-    .heart:before, .heart:after {
-      content: '';
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: red;
-      border-radius: 50%;
-    }
-    .heart:before { top: -20px; left: 0; }
-    .heart:after { left: 20px; top: 0; }
-
-    /* Proposal text + reply (placed just above the ground) */
-    .proposal-container {
-      position: absolute;
-      bottom: 18px;               /* sits inside the green area */
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      opacity: 0;
-      animation: show-text 2s forwards;
-      animation-delay: 3.5s;
-      z-index: 6; /* above legs and ground */
-      pointer-events: auto;
-    }
-
-    .proposal-text {
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.25);
-    }
-
-    .reply-btn {
-      padding: 8px 14px;
-      background: #25D366;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      opacity: 1;
-      animation: bounce 1s infinite;
-      animation-delay: 5.2s;
-    }
-
-    /* Animations (note body-lower keeps translateX(-50%) so centering persists) */
     @keyframes body-lower {
-      0%, 40% { transform: translateX(-50%) translateY(0); }
-      100% { transform: translateX(-50%) translateY(40px); }
+      0%,40% { transform: translateY(0); }
+      100% { transform: translateY(40px); }
     }
 
     @keyframes kneel-leg {
-      0%, 40% { transform: rotate(0) translateX(0); }
+      0%,40% { transform: rotate(0) translateX(0); }
       100% { transform: rotate(70deg) translateX(15px); }
     }
 
     @keyframes offer-ring {
-      0%, 50% { transform: rotate(0); }
+      0%,50% { transform: rotate(0); }
       70% { transform: rotate(-60deg); }
       100% { transform: rotate(-30deg); }
     }
@@ -251,14 +184,71 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
+    /* Heart */
+    .heart {
+      position: absolute;
+      bottom: 70%;
+      left: 50%;
+      width: 40px;
+      height: 40px;
+      background: red;
+      transform: rotate(-45deg);
+      opacity: 0;
+      animation: float-heart 2s forwards;
+      animation-delay: 3s;
+    }
+
+    .heart:before, .heart:after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before { top: -20px; left: 0; }
+    .heart:after { left: 20px; top: 0; }
+
     @keyframes float-heart {
       0% { opacity: 0; transform: translateY(0) scale(0.6) rotate(-45deg); }
       50% { opacity: 1; }
       100% { opacity: 0; transform: translateY(-100px) scale(1.2) rotate(-45deg); }
     }
 
+    /* Proposal container */
+    .proposal-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: show-text 2s forwards;
+      animation-delay: 3.5s;
+    }
+
+    .proposal-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .reply-btn {
+      padding: 8px 16px;
+      background: #25D366;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-left: 8px; /* add breathing space */
+      animation: bounce 1s infinite;
+      animation-delay: 5.2s;
+    }
+
     @keyframes show-text {
-      0% { opacity: 0; transform: scale(0.9); }
+      0% { opacity: 0; transform: scale(0.8); }
       100% { opacity: 1; transform: scale(1); }
     }
 
@@ -267,50 +257,41 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* Replay button */
     .replay-btn {
       position: absolute;
-      top: 12px;
-      right: 12px;
-      padding: 8px 14px;
+      top: 10px;
+      right: 10px;
+      padding: 8px 16px;
       font-size: 14px;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       background: #2e5bff;
       color: white;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      z-index: 10;
     }
 
-    /* ---------- Responsive tweaks for narrow screens ---------- */
+    /* Responsive scaling */
+    @media (max-width: 768px) {
+      .man, .woman {
+        transform: scale(0.6);
+      }
+      .proposal-text {
+        font-size: 18px;
+      }
+    }
+
     @media (max-width: 480px) {
-      /* reduce sizes a little */
-      .head { width: 56px; height: 56px; }
-      .body { width: 42px; height: 100px; }
-      .arm { width: 14px; height: 64px; top: 78px; }
-      .leg { width: 14px; height: 76px; }
-      .ring { bottom: 230px; left: 48%; width: 20px; height: 20px; }
-      .heart { bottom: 280px; left: 52%; width: 32px; height: 32px; }
-      .heart:before, .heart:after { width: 32px; height: 32px; top: -16px; left: 0; }
-      .proposal-text { font-size: 18px; }
-      .reply-btn { padding: 7px 12px; font-size: 14px; }
-
-      /* give a bit more horizontal spacing on very narrow screens */
-      .man { left: 28%; bottom: 110px; }
-      .woman { left: 72%; bottom: 110px; }
-      .ground { height: 110px; }
-      .proposal-container { bottom: 12px; }
-    }
-
-    @media (max-width: 360px) {
-      .man { left: 30%; }
-      .woman { left: 70%; }
-      .body { height: 92px; }
-      .head { width: 50px; height: 50px; }
-      .leg { height: 68px; }
-      .proposal-text { font-size: 16px; }
-      .reply-btn { padding: 6px 10px; font-size: 13px; }
+      .man, .woman {
+        transform: scale(0.5);
+      }
+      .proposal-text {
+        font-size: 16px;
+      }
+      .reply-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
     }
   </style>
 </head>
@@ -318,8 +299,16 @@
   <div class="scene" id="scene">
     <button class="replay-btn" onclick="replay()">Replay</button>
 
+    <!-- Ground -->
+    <div class="ground">
+      <div class="proposal-container">
+        <div class="proposal-text">Will you be my girlfriend?</div>
+        <a href="https://wa.me/2349015151842?text=Yes%2C+I+say+YES!" target="_blank" class="reply-btn">Reply</a>
+      </div>
+    </div>
+
     <!-- Man -->
-    <div class="man" aria-hidden="true">
+    <div class="man">
       <div class="head">
         <div class="eye left"></div>
         <div class="eye right"></div>
@@ -335,7 +324,7 @@
     </div>
 
     <!-- Woman -->
-    <div class="woman" aria-hidden="true">
+    <div class="woman">
       <div class="head">
         <div class="eye left"></div>
         <div class="eye right"></div>
@@ -351,25 +340,14 @@
     </div>
 
     <!-- Extras -->
-    <div class="ring" aria-hidden="true"></div>
-    <div class="heart" aria-hidden="true"></div>
-
-    <!-- Proposal text + reply (inside ground area but positioned above bottom edge) -->
-    <div class="proposal-container" role="group" aria-label="proposal">
-      <div class="proposal-text">Will you be my girlfriend?</div>
-      <a class="reply-btn" href="https://wa.me/2349015151842?text=Yes%2C+I+say+YES!" target="_blank" rel="noopener noreferrer">Reply</a>
-    </div>
-
-    <!-- Ground should be on bottom so characters appear on top -->
-    <div class="ground" aria-hidden="true"></div>
+    <div class="ring"></div>
+    <div class="heart"></div>
   </div>
 
   <script>
-    /* Replay function (keeps original behavior) */
     function replay() {
       const scene = document.getElementById('scene');
-      // replace innerHTML to restart animations
-      scene.innerHTML = scene.innerHTML;
+      scene.innerHTML = scene.innerHTML; // reload content to replay animation
     }
   </script>
 </body>
