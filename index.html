@@ -45,7 +45,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      transform: scale(0.8); /* default scale for smaller screens */
+      transform: scale(0.8); /* unified scale for both */
     }
 
     .man {
@@ -242,7 +242,7 @@
       text-decoration: none;
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      margin-left: 8px; /* add breathing space */
+      margin-left: 8px; /* spacing from text */
       animation: bounce 1s infinite;
       animation-delay: 5.2s;
     }
@@ -276,22 +276,15 @@
       .man, .woman {
         transform: scale(0.6);
       }
-      .proposal-text {
-        font-size: 18px;
-      }
+      .proposal-text { font-size: 18px; }
     }
 
     @media (max-width: 480px) {
       .man, .woman {
         transform: scale(0.5);
       }
-      .proposal-text {
-        font-size: 16px;
-      }
-      .reply-btn {
-        font-size: 14px;
-        padding: 6px 12px;
-      }
+      .proposal-text { font-size: 16px; }
+      .reply-btn { font-size: 14px; padding: 6px 12px; }
     }
   </style>
 </head>
