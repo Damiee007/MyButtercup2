@@ -45,19 +45,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .man {
-      left: 20%;
       bottom: 20%;
-      animation: body-lower 4s forwards;
       transform-origin: bottom center;
     }
 
-    .woman {
-      right: 20%;
-      bottom: 20%;
-    }
+    .man { left: 25%; }
+    .woman { right: 25%; }
 
     /* Head */
     .head {
@@ -140,13 +133,8 @@
       transform-origin: top center;
     }
 
-    .man .leg.left {
-      animation: kneel-leg 4s forwards;
-    }
-
-    .woman .leg {
-      background: #ff4d88;
-    }
+    .man .leg.left { animation: kneel-leg 4s forwards; }
+    .woman .leg { background: #ff4d88; }
 
     /* Ring */
     .ring {
@@ -220,7 +208,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       opacity: 0;
       animation: show-text 2s forwards;
       animation-delay: 3.5s;
@@ -270,14 +258,15 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    /* Responsive scaling */
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-      .man, .woman { transform: scale(0.7); }
+      .man, .woman { bottom: 18%; }
       .proposal-text { font-size: 18px; }
+      .reply-btn { font-size: 14px; padding: 6px 12px; }
     }
 
     @media (max-width: 480px) {
-      .man, .woman { transform: scale(0.6); }
+      .man, .woman { bottom: 15%; }
       .proposal-text { font-size: 16px; }
       .reply-btn { font-size: 14px; padding: 6px 12px; }
     }
@@ -327,6 +316,7 @@
       </div>
     </div>
 
+    <!-- Extras -->
     <div class="ring"></div>
     <div class="heart"></div>
   </div>
