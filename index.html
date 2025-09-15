@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Buttercup</title>
+  <title>Proposal Animation</title>
   <style>
     body {
       margin: 0;
@@ -69,6 +69,18 @@
       position: relative;
     }
 
+    /* Woman hair */
+    .woman .hair {
+      position: absolute;
+      top: -10px;
+      width: 50px;
+      height: 20px;
+      background: #222;
+      border-radius: 50% 50% 0 0;
+      z-index: -1;
+    }
+
+    /* Simple face */
     .eye {
       position: absolute;
       top: 15px;
@@ -103,6 +115,44 @@
 
     .man .body { color: #2e5bff; }
     .woman .body { color: #ff4d88; }
+
+ /* Very wide triangular skirt */
+.woman .skirt {
+  position: relative;
+  width: 50px; /* top matches torso */
+  height: 60px; /* skirt length */
+  background: #ff4d88;
+  margin-top: -2px; /* touches body */
+  clip-path: polygon(0 0, 100% 0, 300% 100%, -200% 100%); /* triangle flare */
+}
+
+/* Outline for the skirt */
+.woman .skirt::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100px; /* shift to align flare */
+  width: 250px; /* total width of triangle */
+  height: 60px;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  border-top: none;
+  background: transparent;
+  clip-path: polygon(0 0, 50px 0, 250px 100%, 0 100%);
+  pointer-events: none;
+}
+
+
+/* Woman torso */
+.woman .body {
+  width: 50px;
+  height: 50px; /* adjust as needed */
+  background: #ff4d88;
+  border: 2px solid #333;
+  border-radius: 20px 20px 0 0; /* only top corners rounded, bottom corners flat */
+}
+
 
     /* Arms (down from shoulders) */
     .arm {
@@ -250,7 +300,6 @@
       50% { transform: translateY(-6px); }
     }
 
-    /* Replay button */
     .replay-btn {
       position: absolute;
       top: 10px;
@@ -302,12 +351,14 @@
 
     <!-- Woman -->
     <div class="woman">
+      <div class="hair"></div>
       <div class="head">
         <div class="eye left"></div>
         <div class="eye right"></div>
         <div class="smile"></div>
       </div>
       <div class="body"></div>
+      <div class="skirt"></div>
       <div class="arm left"></div>
       <div class="arm right"></div>
       <div class="legs">
